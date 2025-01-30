@@ -13,7 +13,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import React from "react"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./components/ui/select"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -33,13 +33,9 @@ function App() {
     return Math.round(number * factor) / factor;
   }
   
-  function commafy(number: number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-  
   function calculateRm(weight: number, repetitions: number, formula: string, rm: number) {
     var result: number = 0;
-    if (formula === 'epley') {
+    if (formula === "epley") {
       result = weight * (1 + (repetitions / 30)) / (1 + (rm / 30));
     } else {
       result = weight / (1.0278 - .0278 * repetitions) * (1.0278 - .0278 * rm);
@@ -57,7 +53,7 @@ function App() {
           <CardContent className="text-center">
             <Drawer>
               <DrawerTrigger asChild>
-                <Button variant="ghost" className="text-3xl">{weight} kg</Button>
+                <Button variant="ghost" className="text-3xl">{weight} {unit}</Button>
               </DrawerTrigger>
               <DrawerContent>
                 <div className="mx-auto w-full max-w-sm">
@@ -177,8 +173,8 @@ function App() {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Formulas</SelectLabel>
-                <SelectItem value="apple">Brzycki</SelectItem>
-                <SelectItem value="banana">Epley</SelectItem>
+                <SelectItem value="brzycki" onClick={() => setFormula("brzycki")}>Brzycki</SelectItem>
+                <SelectItem value="epley"onClick={() => setFormula("epley")}>Epley</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -186,10 +182,10 @@ function App() {
         <Card>
           <CardHeader>
             <CardTitle>Estimated one rep max</CardTitle>
-            <CardDescription>{result}</CardDescription>
+            <CardDescription>{result} {unit}</CardDescription>
           </CardHeader>
         </Card>
-      <ModeToggle />
+      <ModeToggle/>
       </div>
     </ThemeProvider>
   )
