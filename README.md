@@ -1,50 +1,73 @@
-# React + TypeScript + Vite
+# RMTools
+RMTools is a lightweight, user-friendly calculator tool designed for gym enthusiasts, powerlifters, and weightlifters. It helps you estimate your **one-rep max (1RM)**, calculate **rep ranges**, and determine **percentages of your 1RM** based on the weight and repetitions you input. Built with **React** and **Vite**, and styled with **shadcn/ui** components, this app is fast, modern, and easy to use.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features  
+- **1RM Estimation**: Calculate your one-rep max using the Epley formula.  
+- **Rep Ranges**: Determine your working weight for a given number of repetitions (1–12).  
+- **Percentage Calculator**: Find the percentage of your 1RM for any weight.  
+- **Clean UI**: A sleek, intuitive interface powered by **shadcn/ui** components.  
+- **Fast Performance**: Built with **Vite** for lightning-fast development and production builds.  
 
-Currently, two official plugins are available:
+## Demo  
+*(Gif will be uploaded once the app is out.)*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Installation  
+To run this project locally, follow these steps:  
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/RMTools.git
+    ```
 
-- Configure the top-level `parserOptions` property like this:
+2. Navigate to the project directory:
+    ```bash
+    cd RMTools
+    ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+4. Launch the development server:
+    ```bash
+    npm run dev
+    ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+5. Open one of the links provided by vite in terminal
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Usage
+1. Enter the weight you lifted (in kg or lbs).
+2. Enter the number of repetitions (1–12).
+3. View your:
+    - One-Rep Max (1RM)
+    - Rep Ranges for different percentages of your 1RM
+    - Percentage of 1RM for the entered weight
+
+## Technologies Used
+- React
+- Vite
+- shadcn/ui
+- Tailwind CSS
+
+## Contributing
+Contributions are welcome! If you’d like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch:
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+3. Commit your changes:
+    ```bash
+    git commit -m "Add your feature"
+    ```
+4. Push to the branch:
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+5. Open a pull request.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
