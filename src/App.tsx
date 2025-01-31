@@ -1,191 +1,71 @@
 "use client"
 
-import { Minus, Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import React from "react"
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./components/ui/select"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-
-
+import { calculateRm, round } from "@/utils/calculations"
+import { WeightSelector } from "@/components/weight-selector"
+import { RepetitionSelector } from "@/components/repetition-selector"
+import { UnitToggle } from "@/components/unit-toggle"
+import { FormulaSelector } from "@/components/formula-selector"
 
 function App() {
-  const [weight, setWeight] = React.useState(60)
-  const [repetitions, setRepetitions] = React.useState(1)
-  const [formula, setFormula] = React.useState("brzycki")
-  const [unit, setUnit] = React.useState("kg")
-  const [result, setResult] = React.useState(1)
+  const [weight, setWeight] = useState<number>(60)
+  const [repetitions, setRepetitions] = useState<number>(1)
+  const [formula, setFormula] = useState<string>("brzycki")
+  const [unit, setUnit] = useState<string>("kg")
+  const [results, setResults] = useState<number[]>([])
   
-  function round(number: number, decimalPlaces: number) {
-    const factor = Math.pow(10, decimalPlaces);
-    return Math.round(number * factor) / factor;
-  }
-  
-  function calculateRm(weight: number, repetitions: number, formula: string, rm: number) {
-    var result: number = 0;
-    if (formula === "epley") {
-      result = weight * (1 + (repetitions / 30)) / (1 + (rm / 30));
-    } else {
-      result = weight / (1.0278 - .0278 * repetitions) * (1.0278 - .0278 * rm);
-    }
-    setResult(round(result, 2));
+  useEffect(() => {setResults(calculateRm(weight, repetitions, formula))}, [])
+
+  function toggleUnit(newUnit: string) {
+    if (newUnit === unit) return; // Prevent unnecessary updates
+
+    setUnit(newUnit);
+    setWeight(newUnit === "lbs" ? round(weight * 2.20462, 2) : round(weight / 2.20462, 2));
+    setResults(results.map(r => (newUnit === "lbs" ? round(r * 2.20462, 2) : round(r / 2.20462, 2))));
   }
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <div className="flex gap-4 m-4 flex-col ">
+      <div className=" mx-auto flex gap-4 p-4 flex-col text-center justify-self-center sm:w-1/2 w-full">
         <Card>
           <CardHeader>
             <p className="text-center text-3xl bold"><b>Weight</b></p>
           </CardHeader>
-          <CardContent className="text-center">
-            <Drawer>
-              <DrawerTrigger asChild>
-                <Button variant="ghost" className="text-3xl">{weight} {unit}</Button>
-              </DrawerTrigger>
-              <DrawerContent>
-                <div className="mx-auto w-full max-w-sm">
-                  <DrawerHeader>
-                    <DrawerTitle>Change weight</DrawerTitle>
-                    <DrawerDescription>Increase or decrease the amount of lifted weight.</DrawerDescription>
-                  </DrawerHeader>
-                  <div className="p-4 pb-0">
-                    <div className="flex items-center justify-center space-x-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-8 w-8 shrink-0 rounded-full"
-                        onClick={() => setWeight(weight - 2.5)}
-                        disabled={weight <= 0}
-                        >
-                        <Minus />
-                      </Button>
-                      <div className="flex-1 text-center">
-                        <div className="text-7xl font-bold tracking-tighter">
-                          {weight}
-                        </div>
-                        <div className="text-[0.70rem] uppercase text-muted-foreground">
-                          kilograms
-                        </div>
-                      </div>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-8 w-8 shrink-0 rounded-full"
-                        onClick={() => setWeight(weight + 2.5)}
-                        >
-                        <Plus />
-                      </Button>
-                    </div>
-                  </div>
-                  <DrawerFooter>
-                    <DrawerClose asChild>
-                      <Button onClick={() => calculateRm(weight, repetitions, formula, 1)}>Submit</Button>
-                    </DrawerClose>
-                    <DrawerClose asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </DrawerClose>
-                  </DrawerFooter>
-                </div>
-              </DrawerContent>
-            </Drawer>
+          <CardContent>
+            <WeightSelector 
+              weight={weight}
+              unit={unit}
+              setWeight={setWeight}
+              onSubmit={() => setResults(calculateRm(weight, repetitions, formula))} />
           </CardContent>
           <CardHeader>
-            <p className="text-center text-3xl"><b>Repetitions</b></p>
+            <p className="text-3xl"><b>Repetitions</b></p>
           </CardHeader>
-          <CardContent className="text-center">
-            <Drawer>
-              <DrawerTrigger asChild>
-                <Button variant="ghost" className="text-3xl">{repetitions} reps</Button>
-              </DrawerTrigger>
-              <DrawerContent>
-                <div className="mx-auto w-full max-w-sm">
-                  <DrawerHeader>
-                    <DrawerTitle>Change repetitions</DrawerTitle>
-                    <DrawerDescription>Increase or decrease the amount of repetitions.</DrawerDescription>
-                  </DrawerHeader>
-                  <div className="p-4 pb-0">
-                    <div className="flex items-center justify-center space-x-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-8 w-8 shrink-0 rounded-full"
-                        onClick={() => setRepetitions(repetitions - 1)}
-                        disabled={repetitions <= 1}
-                        >
-                        <Minus />
-                      </Button>
-                      <div className="flex-1 text-center">
-                        <div className="text-7xl font-bold tracking-tighter">
-                          {repetitions}
-                        </div>
-                        <div className="text-[0.70rem] uppercase text-muted-foreground">
-                          Repetitions
-                        </div>
-                      </div>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-8 w-8 shrink-0 rounded-full"
-                        onClick={() => setRepetitions(repetitions + 1)}
-                        disabled={repetitions >= 12}
-                        >
-                        <Plus />
-                      </Button>
-                    </div>
-                  </div>
-                  <DrawerFooter>
-                    <DrawerClose asChild>
-                      <Button onClick={() => calculateRm(weight, repetitions, formula, 1)}>Submit</Button>
-                    </DrawerClose>
-                    <DrawerClose asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </DrawerClose>
-                  </DrawerFooter>
-                </div>
-              </DrawerContent>
-            </Drawer>
+          <CardContent>
+            <RepetitionSelector 
+              repetitions={repetitions} 
+              setRepetitions={setRepetitions} 
+              onSubmit={() => setResults(calculateRm(weight, repetitions, formula))} />
           </CardContent>
         </Card>
-          <div className="flex justify-around">
-          <Tabs defaultValue="kg">
-            <TabsList>
-              <TabsTrigger value="kg" onClick={() => setUnit("kg")}>KG</TabsTrigger>
-              <TabsTrigger value="lbs" onClick={() => setUnit("lbs")}>LBS</TabsTrigger>
-            </TabsList>
-          </Tabs>
-          <Select>
-            <SelectTrigger className="max-w-36">
-              <SelectValue placeholder="Select a formula" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Formulas</SelectLabel>
-                <SelectItem value="brzycki" onClick={() => setFormula("brzycki")}>Brzycki</SelectItem>
-                <SelectItem value="epley"onClick={() => setFormula("epley")}>Epley</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+
+          <div className="flex justify-evenly">
+            <ModeToggle/>
+            <UnitToggle unit={unit} toggleUnit={toggleUnit} />
+            <FormulaSelector setFormula={setFormula} />
           </div>
+
         <Card>
-          <CardHeader>
-            <CardTitle>Estimated one rep max</CardTitle>
-            <CardDescription>{result} {unit}</CardDescription>
-          </CardHeader>
+          {results.map((number, index) => 
+            <CardHeader key={index + 1} className="p-2">
+              <CardTitle> {index + 1}RM</CardTitle>
+              <CardDescription>{number} {unit}</CardDescription>
+            </CardHeader>
+          )}
         </Card>
-      <ModeToggle/>
       </div>
     </ThemeProvider>
   )
