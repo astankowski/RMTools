@@ -11,7 +11,6 @@ export function RepetitionSelector({ repetitions, setRepetitions}: RepetitionSel
   return (
     <>
       <div className="mx-auto w-full max-w-sm">
-          Increase or decrease the amount of repetitions
         <div className="p-4 pb-0 flex flex-col gap-4">
           <div className="flex items-center justify-center space-x-2">
             <Button variant="outline" size="icon" className="h-10 w-10 rounded-full" onClick={() => setRepetitions(repetitions - 1)} disabled={repetitions <= 1}>
