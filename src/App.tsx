@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ModeToggle } from "@/components/mode-toggle"
 import { calculateRm, round } from "@/utils/calculations"
@@ -13,11 +13,11 @@ import { FormulaSelector } from "@/components/formula-selector"
 function App() {
   const [weight, setWeight] = useState<number>(60)
   const [repetitions, setRepetitions] = useState<number>(1)
-  const [formula, setFormula] = useState<string>("brzycki")
+  const [formula, setFormula] = useState<string>("epley")
   const [unit, setUnit] = useState<string>("kg")
   const [results, setResults] = useState<number[]>([])
   
-  useEffect(() => {setResults(calculateRm(weight, repetitions, formula))}, [])
+  useEffect(() => {setResults(calculateRm(weight, repetitions, formula))})
 
   function toggleUnit(newUnit: string) {
     if (newUnit === unit) return; // Prevent unnecessary updates
@@ -39,7 +39,7 @@ function App() {
               weight={weight}
               unit={unit}
               setWeight={setWeight}
-              onSubmit={() => setResults(calculateRm(weight, repetitions, formula))} />
+              />
           </CardContent>
           <CardHeader>
             <p className="text-3xl"><b>Repetitions</b></p>
@@ -48,23 +48,31 @@ function App() {
             <RepetitionSelector 
               repetitions={repetitions} 
               setRepetitions={setRepetitions} 
-              onSubmit={() => setResults(calculateRm(weight, repetitions, formula))} />
+              />
           </CardContent>
+          <CardFooter>
+          </CardFooter>
         </Card>
-
-          <div className="flex justify-evenly">
-            <ModeToggle/>
-            <UnitToggle unit={unit} toggleUnit={toggleUnit} />
-            <FormulaSelector setFormula={setFormula} />
-          </div>
-
-        <Card>
+        <div className="grid grid-flow-col place-items-center">
+          <FormulaSelector setFormula={setFormula} />
+          <UnitToggle unit={unit} toggleUnit={toggleUnit} />
+          <ModeToggle/>
+        </div>
+        <Card  className="grid grid-cols-2">
           {results.map((number, index) => 
-            <CardHeader key={index + 1} className="p-2">
-              <CardTitle> {index + 1}RM</CardTitle>
-              <CardDescription>{number} {unit}</CardDescription>
-            </CardHeader>
+              <CardHeader key={index + 1} className="">
+                <CardTitle> {index + 1}RM</CardTitle>
+                <CardDescription>{number} {unit}</CardDescription>
+              </CardHeader>
           )}
+        </Card>
+        <Card  className="grid grid-cols-2">
+          {[105, 102.5, 95, 90, 85, 80, 75, 70].map((percent) => (
+            <CardHeader key={percent}>
+              <CardTitle> {round(weight * percent / 100, 2)} {unit}</CardTitle>
+              <CardDescription>{percent}%</CardDescription>
+            </CardHeader>
+          ))}
         </Card>
       </div>
     </ThemeProvider>
