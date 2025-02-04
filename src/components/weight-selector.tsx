@@ -18,7 +18,7 @@ export function WeightSelector({ weight, unit, setWeight}: WeightSelectorProps) 
               <Minus />
             </Button>
             <div className="flex-1 text-center">
-              <div className="text-7xl font-bold">{weight}</div>
+              <div className="text-5xl font-bold">{weight}</div>
               <div className="text-[0.70rem] uppercase">{unit === "lbs" ? "pounds" : "kilograms"}</div>
             </div>
             <Button variant="outline" size="icon" className="h-10 w-10 rounded-full" onClick={() => setWeight(weight + (unit === "lbs" ? 5 : 2.5))}>

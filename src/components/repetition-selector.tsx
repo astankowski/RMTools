@@ -18,8 +18,7 @@ export function RepetitionSelector({ repetitions, setRepetitions}: RepetitionSel
               <Minus />
             </Button>
             <div className="flex-1 text-center">
-              <div className="text-7xl font-bold">{repetitions}</div>
-              <div className="text-[0.70rem] uppercase">Repetitions</div>
+              <div className="text-5xl font-bold">{repetitions}</div>
             </div>
             <Button variant="outline" size="icon" className="h-10 w-10 rounded-full" onClick={() => setRepetitions(repetitions + 1)} disabled={repetitions >= 12}>
               <Plus />
