@@ -14,7 +14,7 @@ export function FormulaSelector({ setFormula }: FormulaSelectorProps) {
         <SelectGroup>
           <SelectLabel>Formulas</SelectLabel>
           <SelectItem value="brzycki">Brzycki</SelectItem>
-          <SelectItem value="epley">Epley</SelectItem>
+          <SelectItem value="epley">Epley (Default)</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
