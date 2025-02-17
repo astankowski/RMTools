@@ -9,6 +9,7 @@ import { WeightSelector } from "@/components/weight-selector"
 import { RepetitionSelector } from "@/components/repetition-selector"
 import { UnitToggle } from "@/components/unit-toggle"
 import { FormulaSelector } from "@/components/formula-selector"
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const [weight, setWeight] = useState<number>(60)
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <Analytics/>
       <div className=" mx-auto flex gap-4 p-4 flex-col text-center justify-self-center sm:w-1/2 w-full">
         <Card>
           <CardHeader>
