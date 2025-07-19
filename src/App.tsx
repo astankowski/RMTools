@@ -98,29 +98,30 @@ function App() {
                 </CardHeader>
             )}
 
-        </div>
-        <CardFooter>
-          <span className="text-sm text-muted-foreground">
-            Results are estimates. Always prioritize safety and proper form.
-          </span>
-        </CardFooter>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Percentage-Based Weights</CardTitle>
-            <CardDescription>
-              Suggested weights based on percentages of your 1RM.
-            </CardDescription>
-          </CardHeader>
-          <div className="grid grid-cols-2">
-          {[105, 102.5, 95, 90, 85, 80, 75, 70].map((percent) => (
-            <CardHeader key={percent}>
-              <CardTitle> {round(weight * percent / 100, 2)} {unit}</CardTitle>
-              <CardDescription>{percent}%</CardDescription>
-            </CardHeader>
-          ))}
           </div>
-        </Card>
+          <CardFooter>
+            <span className="text-sm text-muted-foreground">
+              Results are estimates. Always prioritize safety and proper form.
+            </span>
+          </CardFooter>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Percentage-Based Weights</CardTitle>
+              <CardDescription>
+                Suggested weights based on percentages of your 1RM.
+              </CardDescription>
+            </CardHeader>
+            <div className="grid grid-cols-2">
+            {[105, 102.5, 95, 90, 85, 80, 75, 70].map((percent) => (
+              <CardHeader key={percent}>
+                <CardTitle> {round(weight * percent / 100, 2)} {unit}</CardTitle>
+                <CardDescription>{percent}%</CardDescription>
+              </CardHeader>
+            ))}
+            </div>
+          </Card>
+        </div>
       </div>
     </ThemeProvider>
   )
