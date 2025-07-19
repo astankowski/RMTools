@@ -3,23 +3,21 @@
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ModeToggle } from "@/components/mode-toggle"
 import { calculateRm, round } from "@/utils/calculations"
 import { WeightSelector } from "@/components/weight-selector"
 import { RepetitionSelector } from "@/components/repetition-selector"
-import { UnitToggle } from "@/components/unit-toggle"
-import { FormulaSelector } from "@/components/formula-selector"
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const [weight, setWeight] = useState<number>(60)
   const [repetitions, setRepetitions] = useState<number>(1)
-  const [formula, setFormula] = useState<string>("epley")
-  const [unit, setUnit] = useState<string>("kg")
+  const [formula, _setFormula] = useState<string>("epley")
+  const [unit, _setUnit] = useState<string>("kg")
   const [results, setResults] = useState<number[]>([])
   
   useEffect(() => {setResults(calculateRm(weight, repetitions, formula))})
 
+  /*
   function toggleUnit(newUnit: string) {
     if (newUnit === unit) return; // Prevent unnecessary updates
 
@@ -27,6 +25,7 @@ function App() {
     setWeight(newUnit === "lbs" ? round(weight * 2.20462, 2) : round(weight / 2.20462, 2));
     setResults(results.map(r => (newUnit === "lbs" ? round(r * 2.20462, 2) : round(r / 2.20462, 2))));
   }
+  */
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
