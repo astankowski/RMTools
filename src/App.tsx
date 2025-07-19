@@ -32,55 +32,71 @@ function App() {
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
       <Analytics/>
-      <div className=" mx-auto flex gap-4 p-4 flex-col text-center justify-self-center sm:w-1/2 w-full">
-        <Card>
+      <div className="min-h-screen w-full bg-white relative">
+        {/* White Sphere Grid Background */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            background: "white",
+            backgroundImage: `
+              linear-gradient(to right, rgba(71,85,105,0.3) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(71,85,105,0.3) 1px, transparent 1px),
+              radial-gradient(circle at 50% 50%, rgba(139,92,246,0.25) 0%, rgba(139,92,246,0.1) 40%, transparent 80%)
+            `,
+            backgroundSize: "32px 32px, 32px 32px, 100% 100%",
+          }}
+        />
+        <div className=" mx-auto flex gap-4 p-4 flex-col text-center justify-self-center sm:w-1/2 w-full">
+          <Card>
+            <CardHeader>
+              <CardTitle>1 Rep Max Calculator</CardTitle>
+              <CardDescription>
+                Enter your weight and repetitions to calculate your 1RM and percentage-based weights.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CardTitle>Enter Your Weight</CardTitle>
+                <CardDescription>
+                  Select the weight you lifted
+                </CardDescription>
+              <WeightSelector 
+                weight={weight}
+                unit={unit}
+                setWeight={setWeight}
+                />
+            </CardContent>
+            <CardContent>
+            <CardTitle>Enter Repetitions</CardTitle>
+          <CardDescription>
+            Select the number of repetitions you performed.
+          </CardDescription>
+              <RepetitionSelector 
+                repetitions={repetitions} 
+                setRepetitions={setRepetitions} 
+                />
+            </CardContent>
+          </Card>
+          {/*
+          <div className="grid grid-flow-col place-items-center z-0">
+            <FormulaSelector setFormula={setFormula} />
+            <UnitToggle unit={unit} toggleUnit={toggleUnit} />
+            <ModeToggle/>
+          </div>
+          */}
+          <Card>
           <CardHeader>
-            <CardTitle>1 Rep Max Calculator</CardTitle>
+            <CardTitle>1 Rep Max (XRM) Results</CardTitle>
             <CardDescription>
-              Enter your weight and repetitions to calculate your 1RM and percentage-based weights.
+              Your estimated 1RM and corresponding weights for different rep ranges.
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <CardTitle>Enter Your Weight</CardTitle>
-              <CardDescription>
-                Select the weight you lifted
-              </CardDescription>
-            <WeightSelector 
-              weight={weight}
-              unit={unit}
-              setWeight={setWeight}
-              />
-          </CardContent>
-          <CardContent>
-          <CardTitle>Enter Repetitions</CardTitle>
-        <CardDescription>
-          Select the number of repetitions you performed.
-        </CardDescription>
-            <RepetitionSelector 
-              repetitions={repetitions} 
-              setRepetitions={setRepetitions} 
-              />
-          </CardContent>
-        </Card>
-        <div className="grid grid-flow-col place-items-center">
-          <FormulaSelector setFormula={setFormula} />
-          <UnitToggle unit={unit} toggleUnit={toggleUnit} />
-          <ModeToggle/>
-        </div>
-        <Card>
-        <CardHeader>
-          <CardTitle>1 Rep Max (XRM) Results</CardTitle>
-          <CardDescription>
-            Your estimated 1RM and corresponding weights for different rep ranges.
-          </CardDescription>
-        </CardHeader>
-        <div className="grid grid-cols-2">
-          {results.map((number, index) => 
-              <CardHeader key={index + 1} className="">
-                <CardTitle> {index + 1}RM</CardTitle>
-                <CardDescription>{number} {unit}</CardDescription>
-              </CardHeader>
-          )}
+          <div className="grid grid-cols-2">
+            {results.map((number, index) => 
+                <CardHeader key={index + 1} className="">
+                  <CardTitle> {index + 1}RM</CardTitle>
+                  <CardDescription>{number} {unit}</CardDescription>
+                </CardHeader>
+            )}
 
         </div>
         <CardFooter>
