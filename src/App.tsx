@@ -30,6 +30,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
       <Analytics/>
       <div className=" mx-auto flex gap-4 p-4 flex-col text-center justify-self-center sm:w-1/2 w-full">
         <Card>
